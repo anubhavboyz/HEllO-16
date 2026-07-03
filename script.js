@@ -2110,3 +2110,279 @@ console.log("%cMade with ❤️ by Anubhav",
 /*====================================================
 END OF PART 8
 ====================================================*/
+/*====================================================
+PART 9
+EXTRA PREMIUM EFFECTS
+====================================================*/
+
+
+//======================================
+// SNOW / PETALS
+//======================================
+
+function createPetal(){
+
+const petal=document.createElement("div");
+
+petal.innerHTML="🌸";
+
+petal.className="emojiFloat";
+
+petal.style.left=Math.random()*100+"vw";
+
+petal.style.fontSize=(18+Math.random()*20)+"px";
+
+petal.style.animationDuration=(7+Math.random()*5)+"s";
+
+document.body.appendChild(petal);
+
+setTimeout(()=>{
+
+petal.remove();
+
+},12000);
+
+}
+
+setInterval(createPetal,900);
+
+
+
+
+//======================================
+// AUTO GLOW NAME
+//======================================
+
+const heroName=document.querySelector(".name");
+
+if(heroName){
+
+setInterval(()=>{
+
+heroName.animate([
+
+{
+
+textShadow:"0 0 20px #ff4fa2"
+
+},
+
+{
+
+textShadow:"0 0 70px #ffffff"
+
+},
+
+{
+
+textShadow:"0 0 20px #ff4fa2"
+
+}
+
+],{
+
+duration:2200
+
+});
+
+},2200);
+
+}
+
+
+
+
+//======================================
+// RANDOM HEART BURST
+//======================================
+
+function randomBurst(){
+
+let x=Math.random()*window.innerWidth;
+
+let y=Math.random()*window.innerHeight;
+
+for(let i=0;i<18;i++){
+
+let h=document.createElement("div");
+
+h.className="emojiFloat";
+
+h.innerHTML="💖";
+
+h.style.left=x+"px";
+
+h.style.top=y+"px";
+
+h.style.position="fixed";
+
+document.body.appendChild(h);
+
+let angle=Math.random()*360;
+
+let distance=50+Math.random()*120;
+
+h.animate([
+
+{
+
+transform:"translate(0,0) scale(1)",
+
+opacity:1
+
+},
+
+{
+
+transform:
+
+`translate(${Math.cos(angle)*distance}px,
+
+${Math.sin(angle)*distance}px)
+
+scale(.2)`,
+
+opacity:0
+
+}
+
+],{
+
+duration:1800
+
+});
+
+setTimeout(()=>{
+
+h.remove();
+
+},1800);
+
+}
+
+}
+
+setInterval(randomBurst,8000);
+
+
+
+
+//======================================
+// SCROLL PROGRESS
+//======================================
+
+const progress=document.createElement("div");
+
+progress.id="progressBar";
+
+progress.style.position="fixed";
+
+progress.style.left="0";
+
+progress.style.top="0";
+
+progress.style.height="5px";
+
+progress.style.zIndex="999999";
+
+progress.style.background="linear-gradient(90deg,#ff4fa2,#ffd369,#7efcff)";
+
+document.body.appendChild(progress);
+
+window.addEventListener("scroll",()=>{
+
+const total=document.documentElement.scrollHeight-window.innerHeight;
+
+const current=window.scrollY;
+
+progress.style.width=(current/total)*100+"%";
+
+});
+
+
+
+
+//======================================
+// CLICK HEART
+//======================================
+
+document.addEventListener("click",(e)=>{
+
+let heart=document.createElement("div");
+
+heart.className="cursorHeart";
+
+heart.innerHTML="💗";
+
+heart.style.left=e.pageX+"px";
+
+heart.style.top=e.pageY+"px";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+
+heart.remove();
+
+},1000);
+
+});
+
+
+
+
+//======================================
+// AUTO FIREWORK
+//======================================
+
+setInterval(()=>{
+
+if(Math.random()>.7){
+
+firework();
+
+}
+
+},6000);
+
+
+
+
+//======================================
+// PHOTO RANDOM SCALE
+//======================================
+
+setInterval(()=>{
+
+photos.forEach(img=>{
+
+img.style.transform="scale(1)";
+
+});
+
+let random=Math.floor(Math.random()*photos.length);
+
+photos[random].style.transform="scale(1.08)";
+
+},3500);
+
+
+
+
+//======================================
+// END MESSAGE
+//======================================
+
+console.log(
+
+"%c❤️ Website Loaded Successfully ❤️",
+
+"font-size:20px;color:#ff4fa2;font-weight:bold;"
+
+);
+
+
+
+/*====================================================
+END OF PART 9
+====================================================*/
