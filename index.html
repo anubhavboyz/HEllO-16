@@ -18,23 +18,27 @@
 ============================================================ */
 :root {
 --navy:#1c2142;
---ink:#26407a;
---muted:#8a8d99;
+--ink:#2d3a63;
+--muted:#93899a;
 --cream:#fffaf4;
---paper:#ffffff;
---pink:#ff6f91;
---coral:#ff7a6b;
+--paper:#fffdfa;
+--pink:#e88ba0;
+--coral:#e8917e;
 --blue:#5fb8e8;
 --green:#7ed957;
 --yellow:#ffcf5c;
 --lav:#c3b2ea;
 --spotify:#1DB954;
+--gold:#c9a05f;
+--gold-light:#e9cf9a;
+--gold-deep:#a5793a;
+--blush:#f6e9df;
 }
 * { margin:0; padding:0; box-sizing: border-box; }
 html, body { height:100%; }
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(160deg, #f7e9ef, #eee6f5 45%, #e9f1f6);
+    background: radial-gradient(ellipse at 50% 0%, #2a2436 0%, #17131f 55%, #0d0b13 100%);
     color: #2c2c34;
     display: flex;
     justify-content: center;
@@ -47,9 +51,14 @@ button { font-family: inherit; }
     max-width: 430px;
     height: 100vh;
     position: relative;
-    background: linear-gradient(180deg, #fff6f1 0%, #fdf1f6 45%, #f2edfb 100%);
-    box-shadow: 0 0 60px rgba(0,0,0,.15);
+    background: linear-gradient(180deg, #fdf3ee 0%, #f9ecf1 45%, #eee8f6 100%);
+    box-shadow: 0 30px 90px rgba(0,0,0,.55), 0 0 0 1px rgba(201,160,95,.15);
     overflow: hidden;
+}
+#stage::after{
+    content:'';
+    position:absolute; inset:0; pointer-events:none; z-index:150;
+    box-shadow: inset 0 0 70px rgba(201,160,95,.10), inset 0 0 2px rgba(201,160,95,.35);
 }
 /* ===================== AMBIENT FLOATING BACKGROUND ===================== */
 /* z-index 100 kiya gaya hai taaki particles PIN screen ke upar bhi float karein */
@@ -66,14 +75,23 @@ button { font-family: inherit; }
 #pin-screen {
     position: absolute; inset: 0;
     z-index: 60;
-    /* Animated Gradient Background */
-    background: linear-gradient(-45deg, #fdf1f6, #f7e9ef, #e9ecef, #f1eefb);
+    /* Animated Gradient Background - soft, light, premium */
+    background: linear-gradient(-45deg, #fdf6ef, #f9ece7, #f3e8f1, #f7efe0);
     background-size: 400% 400%;
-    animation: gradientBG 10s ease infinite;
+    animation: gradientBG 14s ease infinite;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     padding: 36px 28px;
     text-align: center;
     transition: opacity .6s ease, visibility .6s ease;
+}
+#pin-screen::before{
+    content:'';
+    position:absolute; inset:0; pointer-events:none;
+    background:
+      radial-gradient(circle at 20% 12%, rgba(201,160,95,.14), transparent 45%),
+      radial-gradient(circle at 85% 88%, rgba(232,139,160,.12), transparent 50%),
+      radial-gradient(rgba(201,160,95,.16) 1px, transparent 1.4px);
+    background-size: auto, auto, 26px 26px;
 }
 @keyframes gradientBG {
     0% { background-position: 0% 50%; }
@@ -82,58 +100,66 @@ button { font-family: inherit; }
 }
 #pin-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
-/* Floating Animation for Balloons */
-.balloon-cluster { 
-    position: absolute; display: block; pointer-events: none; 
-    animation: floatBalloon 4s ease-in-out infinite;
-    transform-origin: bottom center;
+.pin-sparkle {
+    position: absolute; color: var(--gold); font-size: 1rem; opacity: .55;
+    pointer-events: none; animation: sparkleTwinkle 3.2s ease-in-out infinite;
 }
-@keyframes floatBalloon {
+.pin-sparkle:nth-child(2){ animation-delay: .6s; }
+.pin-sparkle:nth-child(3){ animation-delay: 1.2s; }
+.pin-sparkle:nth-child(4){ animation-delay: 1.8s; }
+@keyframes sparkleTwinkle {
+    0%, 100% { opacity: .25; transform: scale(.85); }
+    50% { opacity: .8; transform: scale(1.15); }
+}
+.pin-gift {
+    display: block; margin: 0 auto 14px; filter: drop-shadow(0 10px 18px rgba(216,116,140,.28));
+    animation: floatGift 3.6s ease-in-out infinite;
+}
+@keyframes floatGift {
     0%, 100% { transform: translateY(0) rotate(-2deg); }
-    50% { transform: translateY(-12px) rotate(2deg); }
+    50% { transform: translateY(-8px) rotate(2deg); }
 }
-
-.balloon-cluster svg { display: block; }
 .deco-emoji { position: absolute; font-size: 2.4rem; pointer-events: none; filter: drop-shadow(0 6px 10px rgba(0,0,0,.10)); }
 .ribbon {
     display: inline-block;
-    background: linear-gradient(90deg, var(--pink), var(--coral));
-    color: #fff; font-weight: 700; font-size: .78rem; letter-spacing: .06em;
-    padding: 7px 22px; border-radius: 20px; position: relative; margin-bottom: 20px;
-    box-shadow: 0 6px 14px rgba(255,122,107,.25);
+    background: linear-gradient(90deg, var(--gold-deep), var(--gold), var(--gold-light));
+    color: #241c10; font-weight: 700; font-size: .74rem; letter-spacing: .18em;
+    padding: 8px 24px; border-radius: 20px; position: relative; margin-bottom: 22px;
+    box-shadow: 0 8px 20px rgba(165,121,58,.35);
 }
 .pin-card {
-    background: rgba(255, 255, 255, 0.7); 
-    backdrop-filter: blur(12px); 
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.8); 
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(18px); 
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(201,160,95,.3);
     border-radius: 30px; 
-    padding: 32px 24px 26px;
+    padding: 34px 24px 28px;
     width: 100%; max-width: 320px; 
-    box-shadow: 0 20px 40px rgba(28, 33, 66, 0.08); 
+    box-shadow: 0 25px 55px rgba(28,20,10,.14), inset 0 1px 0 rgba(255,255,255,.6); 
     position: relative; z-index: 2;
 }
-.pin-card .sub1 { color: var(--muted); font-size: .85rem; margin-bottom: 4px; }
-.pin-card .sub2 { font-weight: 700; font-size: 1.4rem; color: var(--ink); margin-bottom: 8px; font-family: 'Playfair Display', serif;}
-.pin-card .sub3 { color: var(--coral); font-size: .82rem; margin-bottom: 20px; font-weight: 500;}
-.dots { display: flex; justify-content: center; gap: 12px; margin-bottom: 24px; }
-.dots span { width: 12px; height: 12px; border-radius: 50%; background: rgba(0,0,0,0.08); transition: all .3s ease; }
-.dots span.filled { background: var(--pink); transform: scale(1.2); box-shadow: 0 2px 8px rgba(255, 111, 145, 0.4); }
+.pin-card .sub1 { color: var(--muted); font-size: .82rem; margin-bottom: 4px; letter-spacing: .03em; }
+.pin-card .sub2 { font-weight: 700; font-size: 1.5rem; color: var(--ink); margin-bottom: 10px; font-family: 'Playfair Display', serif;}
+.pin-card .sub3 { color: var(--gold-deep); font-size: .8rem; margin-bottom: 22px; font-weight: 500; letter-spacing: .01em;}
+.dots { display: flex; justify-content: center; gap: 12px; margin-bottom: 26px; }
+.dots span { width: 11px; height: 11px; border-radius: 50%; background: rgba(201,160,95,0.12); border: 1px solid rgba(201,160,95,.25); transition: all .3s ease; }
+.dots span.filled { background: var(--gold); border-color: var(--gold); transform: scale(1.2); box-shadow: 0 2px 10px rgba(201, 160, 95, 0.5); }
 .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .keypad button { 
     aspect-ratio: 1; border: none; 
-    background: #ffffff; 
+    background: #ffffff;
+    border: 1px solid rgba(201,160,95,.15);
     border-radius: 50%; 
-    font-size: 1.3rem; font-weight: 500; color: var(--navy); 
+    font-size: 1.25rem; font-weight: 500; color: var(--navy); 
     cursor: pointer; 
-    box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+    box-shadow: 0 4px 10px rgba(28,20,10,0.06);
     transition: all .2s ease; 
 }
-.keypad button:active { background: var(--pink); color: #fff; transform: scale(0.9); box-shadow: 0 4px 15px rgba(255, 111, 145, 0.4); }
-.keypad button.ghost { background: transparent; box-shadow: none; color: transparent; cursor: default; }
-.keypad button.del { font-size: 1.2rem; color: var(--coral); background: transparent; box-shadow: none; }
-.keypad button.del:active { background: transparent; color: var(--pink); transform: scale(0.9); box-shadow: none;}
-.pin-error { height: 18px; color: #ff5a6e; font-size: .8rem; font-weight: 500; margin-top: 12px; }
+.keypad button:active { background: linear-gradient(135deg,var(--gold),var(--gold-deep)); color: #fff; transform: scale(0.9); box-shadow: 0 4px 15px rgba(201,160,95,.45); border-color: transparent; }
+.keypad button.ghost { background: transparent; box-shadow: none; color: transparent; cursor: default; border-color: transparent; }
+.keypad button.del { font-size: 1.15rem; color: var(--gold-deep); background: transparent; box-shadow: none; border-color: transparent; }
+.keypad button.del:active { background: transparent; color: var(--coral); transform: scale(0.9); box-shadow: none;}
+.pin-error { height: 18px; color: #e8617a; font-size: .8rem; font-weight: 500; margin-top: 12px; }
 .pin-error.shake { animation: shake .4s ease; }
 
 /* ===================== SCROLL CONTAINER ===================== */
@@ -167,13 +193,14 @@ section.panel {
 .stagger .reveal:nth-child(6) { transition-delay: .4s; }
 
 /* ---- hero ---- */
-.badge { display: flex; align-items: center; gap: 6px; font-size: .72rem; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
-.badge .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--coral); }
-.hero .script-line { font-size: 1.5rem; color: var(--muted); margin-bottom: 4px; }
-.hero .name { font-size: clamp(2.6rem, 13vw, 3.6rem); color: var(--ink); font-weight: 800; line-height: 1; margin-bottom: 14px; }
-.hero .yearline { display: flex; align-items: center; justify-content: center; gap: 10px; color: var(--yellow); font-size: .85rem; margin-bottom: 18px; letter-spacing: .08em; }
-.hero .yearline span.num { color: #22252f; font-weight: 600; letter-spacing: .06em; }
-.hero p { max-width: 280px; color: var(--muted); font-size: .88rem; line-height: 1.7; }
+.badge { display: flex; align-items: center; gap: 8px; font-size: .68rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 20px; font-weight: 600; }
+.badge .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); }
+.hero .script-line { font-size: 1.5rem; color: var(--muted); margin-bottom: 2px; }
+.hero .name { font-size: clamp(2.8rem, 13vw, 3.8rem); color: var(--ink); font-weight: 800; line-height: 1; margin-bottom: 16px; position: relative; display: inline-block; letter-spacing: -.01em; }
+.hero .name::after { content:''; display:block; width: 64px; height: 2px; margin: 16px auto 0; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.hero .yearline { display: flex; align-items: center; justify-content: center; gap: 10px; color: var(--gold-deep); font-size: .78rem; margin-bottom: 18px; letter-spacing: .12em; }
+.hero .yearline span.num { color: #22252f; font-weight: 600; letter-spacing: .08em; }
+.hero p { max-width: 280px; color: var(--muted); font-size: .88rem; line-height: 1.75; }
 
 /* ---- eyebrow prompts ---- */
 .prompt { display: flex; flex-direction: column; align-items: center; margin-bottom: 26px; cursor: pointer; }
@@ -194,10 +221,10 @@ section.panel {
 .ph { cursor: pointer; }
 
 /* ---- galleries ---- */
-.gallery-title { font-size: .75rem; letter-spacing: .2em; text-transform: uppercase; color: var(--coral); margin-bottom: 6px; }
+.gallery-title { font-size: .7rem; letter-spacing: .25em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 8px; font-weight: 600; }
 .gallery-heading { font-size: 1.4rem; margin-bottom: 22px; color: #22252f; }
 .polaroid-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 6px; max-width: 320px; }
-.polaroid { background: #fff; padding: 7px 7px 20px; border-radius: 6px; box-shadow: 0 10px 24px rgba(0,0,0,.15); }
+.polaroid { background: #fff; padding: 7px 7px 20px; border-radius: 6px; box-shadow: 0 14px 30px rgba(28,33,66,.16), 0 1px 0 rgba(201,160,95,.25); }
 .polaroid:nth-child(5) { grid-column: 1 / span 2; max-width: 160px; margin: 0 auto; }
 .polaroid:nth-child(1) { transform: rotate(-4deg); }
 .polaroid:nth-child(2) { transform: rotate(3deg); }
@@ -209,14 +236,14 @@ section.panel {
 .polaroid .cap { margin-top: 5px; text-align: center; font-family: 'Dancing Script', cursive; font-size: .85rem; color: #555; }
 
 .tall-wrap { display: flex; gap: 9px; align-items: center; margin-bottom: 18px; max-width: 340px; }
-.tall-card { flex: 1; background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 26px rgba(0,0,0,.15); }
+.tall-card { flex: 1; background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 14px 32px rgba(28,33,66,.18); border: 1px solid rgba(201,160,95,.18); }
 .tall-card:nth-child(2) { transform: translateY(-12px); }
 .tall-card .ph { width: 100%; aspect-ratio: 3/4; background: linear-gradient(135deg,#f1eefb,#e4defb); display: flex; align-items: center; justify-content: center; color: #c9c2e6; font-size: 1.4rem; }
 .tall-card .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .tall-card .cap { padding: 6px 4px; font-size: .65rem; color: var(--muted); text-align: center; }
 
 .grid6 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 340px; }
-.grid6 .card { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 8px 18px rgba(0,0,0,.12); }
+.grid6 .card { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 10px 22px rgba(28,33,66,.15); border: 1px solid rgba(201,160,95,.15); }
 .grid6 .ph { width: 100%; aspect-ratio: 1; background: linear-gradient(135deg,#f1eefb,#e4defb); display: flex; align-items: center; justify-content: center; color: #c9c2e6; font-size: 1.1rem; }
 .grid6 .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .grid6 .cap { padding: 4px; font-size: .55rem; color: var(--muted); text-align: center; }
@@ -240,9 +267,9 @@ section.panel {
 .puff { position: absolute; top: 38px; left: 50%; width: 14px; height: 14px; border-radius: 50%; background: rgba(255,255,255,.75); opacity: 0; pointer-events: none; transform: translate(-50%,0); }
 .cake-wrap.blown .puff { animation: puffOut .7s ease forwards; }
 @keyframes puffOut { 0% { opacity: .85; transform: translate(-50%,0) scale(.5); } 100% { opacity: 0; transform: translate(-50%,-32px) scale(2.4); } }
-.cake-caption { color: var(--muted); font-size: .88rem; opacity: 0; transform: translateY(8px); transition: opacity .5s ease, transform .5s ease; width: 100%;}
+.cake-caption { color: var(--muted); font-size: .9rem; font-family: 'Playfair Display', serif; opacity: 0; transform: translateY(8px); transition: opacity .5s ease, transform .5s ease; width: 100%;}
 .cake-caption.show { opacity: 1; transform: translateY(0); }
-.cake-caption b { color: #22252f; }
+.cake-caption b { color: var(--gold-deep); font-weight: 700; }
 
 /* ---- wish box (WhatsApp) ---- */
 .wish-box {
@@ -252,29 +279,30 @@ section.panel {
 }
 .wish-box.show { opacity: 1; visibility: visible; transform: translateY(0); }
 .wish-box textarea {
-    width: 100%; height: 75px; padding: 12px; border-radius: 12px; 
-    border: 1px solid rgba(0,0,0,0.08); font-family: 'Poppins', sans-serif; 
-    font-size: 0.85rem; resize: none; outline: none; background: rgba(255,255,255,0.8);
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
+    width: 100%; height: 75px; padding: 12px 14px; border-radius: 14px; 
+    border: 1px solid rgba(201,160,95,0.25); font-family: 'Poppins', sans-serif; 
+    font-size: 0.85rem; resize: none; outline: none; background: rgba(255,255,255,0.85);
+    box-shadow: inset 0 2px 6px rgba(28,33,66,0.04);
 }
 .wish-box button {
-    background: #25D366; /* WhatsApp Green */
-    color: white; border: none; padding: 10px; border-radius: 20px; 
+    background: linear-gradient(135deg, #25D366, #1fb955); /* WhatsApp Green */
+    color: white; border: none; padding: 11px; border-radius: 20px; 
     font-weight: 600; cursor: pointer; transition: 0.2s; 
     display: flex; align-items: center; justify-content: center; gap: 6px;
-    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3); font-family: 'Poppins', sans-serif;
+    box-shadow: 0 6px 16px rgba(37, 211, 102, 0.35); font-family: 'Poppins', sans-serif;
+    letter-spacing: .02em;
 }
 .wish-box button:active { transform: scale(0.95); }
 
 /* ---- song card ---- */
-.song-eyebrow { font-size: .75rem; letter-spacing: .2em; text-transform: uppercase; color: var(--coral); margin-bottom: 6px; }
+.song-eyebrow { font-size: .7rem; letter-spacing: .25em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 8px; font-weight: 600; }
 .song-heading { font-size: 1.3rem; margin-bottom: 20px; color: #22252f; }
 .spotify-card {
-    width: 100%; max-width: 300px; background: #121417; border-radius: 16px; padding: 14px;
-    box-shadow: 0 18px 40px rgba(0,0,0,.3); text-align: left;
+    width: 100%; max-width: 300px; background: linear-gradient(160deg,#181a1f,#101216); border-radius: 18px; padding: 16px;
+    box-shadow: 0 22px 50px rgba(0,0,0,.4), 0 0 0 1px rgba(201,160,95,.2); text-align: left;
 }
 .spotify-top { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; }
-.spotify-art { width: 52px; height: 52px; border-radius: 8px; background: linear-gradient(135deg,var(--blue),var(--lav)); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; }
+.spotify-art { width: 52px; height: 52px; border-radius: 8px; background: linear-gradient(135deg,var(--gold-light),var(--gold-deep)); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; box-shadow: 0 4px 12px rgba(201,160,95,.35); }
 .spotify-meta { flex: 1; overflow: hidden; }
 .spotify-meta .t { color: #fff; font-size: .9rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .spotify-meta .a { color: #9a9ea8; font-size: .72rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -287,27 +315,28 @@ section.panel {
 .spotify-save span.plus { width: 18px; height: 18px; border: 1.5px solid var(--spotify); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .75rem; }
 
 /* ---- letter ---- */
-.letter-panel { background: linear-gradient(180deg,#eef1fb,var(--cream) 40%); }
+.letter-panel { background: linear-gradient(180deg,#efe9f4,var(--blush) 55%); }
 .envelope { display: flex; flex-direction: column; align-items: center; cursor: pointer; }
-.envelope-icon { font-size: 2.6rem; margin-bottom: 10px; animation: pop 2.2s ease-in-out infinite; }
-.envelope-text { color: var(--muted); font-size: .95rem; }
-.note-card { background: var(--paper); border-radius: 18px; padding: 30px 24px; max-width: 320px; text-align: left; box-shadow: 0 20px 45px rgba(0,0,0,.12); display: none; }
+.envelope-icon { font-size: 2.6rem; margin-bottom: 10px; animation: pop 2.2s ease-in-out infinite; filter: drop-shadow(0 6px 14px rgba(201,160,95,.35)); }
+.envelope-text { color: var(--gold-deep); font-size: .9rem; letter-spacing: .04em; }
+.note-card { background: var(--paper); border-radius: 4px; padding: 34px 28px; max-width: 320px; text-align: left; box-shadow: 0 25px 60px rgba(28,33,66,.2), 0 0 0 1px rgba(201,160,95,.2); display: none; position: relative; }
+.note-card::before{ content:''; position:absolute; inset:8px; border:1px solid rgba(201,160,95,.35); pointer-events:none; }
 .note-card.open { display: block; animation: cardOpen .5s ease; }
 @keyframes cardOpen { from { opacity: 0; transform: translateY(16px) scale(.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
-.note-card .greet { font-size: 1.5rem; color: var(--ink); margin-bottom: 12px; }
-#letter-text { font-size: .9rem; line-height: 1.8; color: #3c3c46; white-space: pre-wrap; }
-.note-card .sign { margin-top: 16px; text-align: right; font-size: 1.2rem; color: var(--ink); }
+.note-card .greet { font-size: 1.5rem; color: var(--ink); margin-bottom: 14px; }
+#letter-text { font-size: .9rem; line-height: 1.85; color: #3c3c46; white-space: pre-wrap; }
+.note-card .sign { margin-top: 18px; text-align: right; font-size: 1.3rem; color: var(--gold-deep); }
 
 /* ---- final ---- */
-.final .script-line { font-size: 1.7rem; color: var(--ink); margin-bottom: 6px; }
-.final .name2 { font-size: 1.9rem; color: var(--ink); font-weight: 700; margin-bottom: 14px; }
-.final p { max-width: 280px; color: var(--muted); font-size: .85rem; line-height: 1.7; margin-bottom: 20px; }
-.final .sign2 { font-family: 'Dancing Script', cursive; font-size: 1.2rem; color: var(--ink); margin-bottom: 6px; }
+.final .script-line { font-size: 1.7rem; color: var(--gold-deep); margin-bottom: 6px; }
+.final .name2 { font-size: 2rem; color: var(--ink); font-weight: 700; margin-bottom: 16px; }
+.final p { max-width: 280px; color: var(--muted); font-size: .85rem; line-height: 1.75; margin-bottom: 22px; }
+.final .sign2 { font-family: 'Dancing Script', cursive; font-size: 1.3rem; color: var(--ink); margin-bottom: 6px; }
 
 /* side scroll-dot nav */
 #dotnav { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 10px; z-index: 40; }
-#dotnav button { width: 7px; height: 7px; border-radius: 50%; background: rgba(38,64,122,.25); border: none; padding: 0; cursor: pointer; transition: background .2s ease, transform .2s ease; }
-#dotnav button.active { background: var(--ink); transform: scale(1.4); }
+#dotnav button { width: 7px; height: 7px; border-radius: 50%; background: rgba(38,64,122,.2); border: none; padding: 0; cursor: pointer; transition: background .2s ease, transform .2s ease; }
+#dotnav button.active { background: var(--gold-deep); transform: scale(1.4); }
 .confetti-piece { position: absolute; top: 50%; left: 50%; pointer-events: none; z-index: 200; }
 @media (prefers-reduced-motion: reduce) {
 .prompt-icon, .cake-wrap.lit #flame, .scroll-cue::after { animation: none !important; }
@@ -323,25 +352,27 @@ section.panel {
 
 <!-- ===================== PIN SCREEN ===================== -->
 <div id="pin-screen">
-  <div class="balloon-cluster" style="top:18px;left:14px;">
-    <svg viewBox="0 0 110 130" width="92" xmlns="http://www.w3.org/2000/svg">
-      <line x1="24" y1="52" x2="40" y2="95" stroke="#fff" stroke-width="1" opacity=".5"/>
-      <line x1="55" y1="40" x2="42" y2="95" stroke="#fff" stroke-width="1" opacity=".5"/>
-      <line x1="82" y1="55" x2="44" y2="95" stroke="#fff" stroke-width="1" opacity=".5"/>
-      <ellipse cx="24" cy="30" rx="19" ry="23" fill="#ff6f91"/>
-      <ellipse cx="18" cy="20" rx="5" ry="7" fill="#ffffff" opacity=".35"/>
-      <ellipse cx="55" cy="20" rx="16" ry="20" fill="#5fb8e8"/>
-      <ellipse cx="50" cy="11" rx="4" ry="6" fill="#ffffff" opacity=".35"/>
-      <ellipse cx="82" cy="38" rx="14" ry="17" fill="#7ed957"/>
-      <ellipse cx="78" cy="29" rx="4" ry="5" fill="#ffffff" opacity=".35"/>
-    </svg>
-  </div>
-  <svg class="deco-emoji" style="bottom:14px;left:10px;font-size:1rem;" viewBox="0 0 90 100" width="66" xmlns="http://www.w3.org/2000/svg">
-    <polygon points="45,10 20,85 70,85" fill="#c3b2ea"/>
-    <circle cx="45" cy="30" r="4" fill="#ffcf5c"/>
-    <circle cx="38" cy="45" r="4" fill="#ff6f91"/>
-    <circle cx="52" cy="50" r="4" fill="#7ed957"/>
-    <circle cx="45" cy="10" r="6" fill="#ffcf5c"/>
+  <div class="pin-sparkle" style="top:10%;left:14%;">✦</div>
+  <div class="pin-sparkle" style="top:16%;right:12%;">✧</div>
+  <div class="pin-sparkle" style="bottom:20%;left:10%;">✧</div>
+  <div class="pin-sparkle" style="bottom:14%;right:14%;">✦</div>
+  <svg class="pin-gift" viewBox="0 0 90 90" width="64" xmlns="http://www.w3.org/2000/svg">
+    <rect x="14" y="36" width="62" height="42" rx="4" fill="url(#giftBody)"/>
+    <rect x="14" y="36" width="62" height="12" fill="url(#giftLid)"/>
+    <rect x="40" y="36" width="10" height="42" fill="#fff" opacity=".85"/>
+    <rect x="14" y="36" width="62" height="12" fill="none" stroke="#fff" stroke-width="0" />
+    <path d="M45 36 C30 28 26 14 38 12 C48 10 46 26 45 36 Z" fill="#e9cf9a"/>
+    <path d="M45 36 C60 28 64 14 52 12 C42 10 44 26 45 36 Z" fill="#c9a05f"/>
+    <defs>
+      <linearGradient id="giftBody" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#e88ba0"/>
+        <stop offset="1" stop-color="#d9748c"/>
+      </linearGradient>
+      <linearGradient id="giftLid" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#f0a3b5"/>
+        <stop offset="1" stop-color="#e88ba0"/>
+      </linearGradient>
+    </defs>
   </svg>
   <div class="ribbon">HAPPY BIRTHDAY!</div>
   <div class="pin-card">
@@ -685,7 +716,7 @@ document.getElementById('lightbox').addEventListener('click', (e)=>{
 /* ===================== AMBIENT FLOATING BACKGROUND ===================== */
 (function initAmbient(){
   const wrap = document.getElementById('ambientHearts');
-  const glyphs = ['💗','✨','💫','🌸','💛'];
+  const glyphs = ['✨','💫','🌸','💗','⭐'];
   for(let i=0;i<16;i++){
     const s = document.createElement('span');
     s.textContent = glyphs[Math.floor(Math.random()*glyphs.length)];
@@ -700,26 +731,28 @@ document.getElementById('lightbox').addEventListener('click', (e)=>{
 
 /* ===================== POPPER FROM TOP ===================== */
 function popperFromTop(){
-  const colors = ['#ff6f91','#ffcf5c','#7ed957','#5fb8e8','#c3b2ea','#ff7a6b'];
+  const colors = ['#e88ba0','#e9cf9a','#c9a05f','#7ed957','#5fb8e8','#c3b2ea','#ffffff'];
   const stage = document.getElementById('stage').getBoundingClientRect();
-  for(let i=0;i<40;i++){
+  for(let i=0;i<55;i++){
     const p = document.createElement('div');
     p.className = 'confetti-piece';
-    const size = 6 + Math.random()*5;
+    const size = 7 + Math.random()*6;
     p.style.width = size+'px';
     p.style.height=(size*1.4)+'px';
+    p.style.borderRadius = Math.random() > .5 ? '50%' : '2px';
     p.style.background = colors[Math.floor(Math.random()*colors.length)];
+    p.style.boxShadow = '0 2px 6px rgba(0,0,0,.15)';
     p.style.left = (stage.left + Math.random()*stage.width) + 'px';
-    p.style.top = stage.top + 'px';
+    p.style.top = (stage.top - 20) + 'px';
     document.body.appendChild(p);
-    const dx = (Math.random()*160-80);
-    const dy = stage.height*0.55 + Math.random()*130;
-    p.style.transition = 'transform 1.3s cubic-bezier(.2,.8,.4,1), opacity 1.3s ease';
+    const dx = (Math.random()*180-90);
+    const dy = stage.height*0.6 + Math.random()*140;
+    p.style.transition = 'transform 1.4s cubic-bezier(.2,.8,.4,1), opacity 1.4s ease';
     requestAnimationFrame(()=>{
       p.style.transform = `translate(${dx}px, ${dy}px) rotate(${Math.random()*540}deg)`;
       p.style.opacity = '0';
     });
-    setTimeout(()=>p.remove(), 1350);
+    setTimeout(()=>p.remove(), 1450);
   }
 }
 
@@ -743,7 +776,7 @@ audio.addEventListener('timeupdate', ()=>{
 
 /* ===================== CONFETTI BURST ===================== */
 function burstConfetti(){
-  const colors = ['#ff6f91','#ffcf5c','#7ed957','#5fb8e8','#c3b2ea'];
+  const colors = ['#e88ba0','#e9cf9a','#c9a05f','#7ed957','#5fb8e8'];
   const stage = document.getElementById('stage').getBoundingClientRect();
   for(let i=0;i<26;i++){
     const p = document.createElement('div');
